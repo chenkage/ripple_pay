@@ -1,0 +1,72 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <parent>
+        <artifactId>ripple_pay</artifactId>
+        <groupId>com.ejar</groupId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
+    <modelVersion>4.0.0</modelVersion>
+
+    <artifactId>ripple_pay-persistence</artifactId>
+    <packaging>jar</packaging>
+
+    <name>ripple_pay-persistence</name>
+
+    <properties>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <artifactId>ripple_pay-domain</artifactId>
+            <groupId>com.ejar</groupId>
+            <version>${project.parent.version}</version>
+        </dependency>
+        <!-- drivers & middle ware -->
+        <dependency>
+            <groupId>com.jolbox</groupId>
+            <artifactId>bonecp</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.zaxxer</groupId>
+            <artifactId>HikariCP</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mariadb.jdbc</groupId>
+            <artifactId>mariadb-java-client</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.mybatis</groupId>
+            <artifactId>mybatis-spring</artifactId>
+        </dependency>
+        <!-- redis & spring -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.data</groupId>
+            <artifactId>spring-data-redis</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <finalName>ripple_pay-persistence</finalName>
+        <filters>
+            <filter>src/main/resources/config/${profile-name}.properties</filter>
+        </filters>
+        <resources>
+            <resource>
+                <directory>src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+    </build>
+</project>

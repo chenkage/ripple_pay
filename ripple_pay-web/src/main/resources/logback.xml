@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration debug="false">
+
+    <jmxConfigurator />
+
+	<appender name="FILEINFO" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/ripple_pay-web_warn.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${catalina.base}/logs/%d{yyyy-MM-dd}/ripple_pay-web_warn.log</FileNamePattern>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>WARN</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder>
+			<pattern>[ripple_pay-web] %d{yyyy-MM-dd HH:mm:ss.SSS}:[%-5level][%t]{%logger{0}:%L}-%m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="FILEERROR" class="ch.qos.logback.core.rolling.RollingFileAppender">
+		<file>${catalina.base}/logs/ripple_pay-web_error.log</file>
+		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+			<FileNamePattern>${catalina.base}/logs/%d{yyyy-MM-dd}/ripple_pay-web_error.log</FileNamePattern>
+		</rollingPolicy>
+		<filter class="ch.qos.logback.classic.filter.LevelFilter">
+			<level>ERROR</level>
+			<onMatch>ACCEPT</onMatch>
+			<onMismatch>DENY</onMismatch>
+		</filter>
+		<encoder>
+			<pattern>[ripple_pay-web] %d{yyyy-MM-dd HH:mm:ss.SSS}:[%-5level][%t]{%logger{0}:%L}-%m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>[ripple_pay-web|console] %d{yyyy-MM-dd HH:mm:ss.SSS}:[%-5level][%t]{%logger{0}:%L}-%m%n</pattern>
+		</encoder>
+	</appender>
+
+	<logger name="net.sf.ehcache" level="WARN" />
+	<logger name="org.springframework" level="INFO" />
+	<logger name="org.apache.mina" level="WARN" />
+	<logger name="org.apache.cxf" level="WARN" />
+	<logger name="org.springframework.flex" level="ERROR" />
+
+	<root level="${catalina.log.priority}">
+		<appender-ref ref="console" />
+	</root>
+</configuration> 

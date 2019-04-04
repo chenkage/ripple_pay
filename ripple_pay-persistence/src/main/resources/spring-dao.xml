@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:util="http://www.springframework.org/schema/util" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
+        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
+
+    <bean id="writeDataSource" class="com.zaxxer.hikari.HikariDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${config.dbpool.driverClass}" />
+        <property name="jdbcUrl" value="${config.dbpool.jdbcUrl}" />
+        <property name="username" value="${config.dbpool.username}" />
+        <property name="password" value="${config.dbpool.password}" />
+        <property name="maximumPoolSize" value="${maximumPoolSize}" />
+        <property name="minimumIdle" value="${minimumIdle}" />
+        <property name="connectionTestQuery" value="${connectionTestQuery}" />
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+                <prop key="useServerPrepStmts">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="readDataSource" class="com.zaxxer.hikari.HikariDataSource"
+          destroy-method="close">
+        <property name="driverClassName" value="${config.dbpool.driverClass}" />
+        <property name="jdbcUrl" value="${config.dbpool.read.jdbcUrl}" />
+        <property name="username" value="${config.dbpool.read.username}" />
+        <property name="password" value="${config.dbpool.read.password}" />
+        <property name="maximumPoolSize" value="${maximumPoolSize}" />
+        <property name="minimumIdle" value="${minimumIdle}" />
+        <property name="connectionTestQuery" value="${connectionTestQuery}" />
+        <property name="dataSourceProperties">
+            <props>
+                <prop key="cachePrepStmts">true</prop>
+                <prop key="prepStmtCacheSize">250</prop>
+                <prop key="prepStmtCacheSqlLimit">2048</prop>
+                <prop key="useServerPrepStmts">true</prop>
+            </props>
+        </property>
+    </bean>
+
+    <bean id="dataSource" class="com.ejar.persistence.datasource.DynamicRouteDataSource">
+        <property name="targetDataSources">
+            <map key-type="java.lang.String">
+                <entry key="readDataSource" value-ref="readDataSource" />
+                <entry key="writeDataSource" value-ref="writeDataSource" />
+            </map>
+        </property>
+        <property name="defaultTargetDataSource" ref="writeDataSource"/>
+    </bean>
+
+    <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+    <tx:annotation-driven transaction-manager="transactionManager"/>
+
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="configLocation" value="classpath:mybatis.cfg.xml"/>
+        <property name="dataSource" ref="dataSource"/>
+        <property name="mapperLocations">
+            <list>
+                <value>classpath*:mybatis/*Mapper.xml</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="sqlSessionTemplate" class="org.mybatis.spring.SqlSessionTemplate">
+        <constructor-arg index="0" ref="sqlSessionFactory"/>
+    </bean>
+
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="annotationClass" value="org.springframework.stereotype.Component"/>
+        <property name="basePackage" value="com.ejar.persistence.mapper"/>
+        <property name="sqlSessionTemplateBeanName" value="sqlSessionTemplate"/>
+    </bean>
+
+</beans>
