@@ -29,7 +29,7 @@
 	<bean id="configure" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
 		<property name="locations">
 			<list>
-				<value>classpath*:META-INF/*-config.properties</value>
+				<value>classpath*:*.properties</value>
 			</list>
 		</property>
 		<property name="ignoreUnresolvablePlaceholders" value="true" />

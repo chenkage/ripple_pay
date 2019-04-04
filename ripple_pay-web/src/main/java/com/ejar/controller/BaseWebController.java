@@ -1,4 +1,4 @@
-package com.ejar.api.controller;
+package com.ejar.controller;
 
 import com.auth0.jwt.interfaces.Claim;
 import com.ejar.common.Asserts;

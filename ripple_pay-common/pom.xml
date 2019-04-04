@@ -34,8 +34,8 @@
             <artifactId>java-jwt</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.cms.project</groupId>
-            <artifactId>basic-redis</artifactId>
+            <groupId>com.ejar</groupId>
+            <artifactId>ripple_pay-redis</artifactId>
             <version>1.0-SNAPSHOT</version>
             <scope>compile</scope>
         </dependency>

@@ -11,10 +11,26 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
        default-lazy-init="true">
 
-
-    <context:component-scan base-package="com.ejar" use-default-filters="false">
+    <context:component-scan base-package="com.ejar">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
+
+    <!-- 超时日志 -->
+    <bean id="processTimeAspect" class="com.ejar.common.aspect.ProcessTimeAspect" />
+    <aop:aspectj-autoproxy/>
+    <aop:config>
+        <aop:aspect ref="processTimeAspect">
+            <aop:around method="loggerProcessTime" pointcut="@annotation(com.ejar.common.annotation.LoggerProcessTime)" />
+        </aop:aspect>
+    </aop:config>
+
+    <!-- token -->
+    <bean id="authTokenAspect" class="com.ejar.common.permission.AuthTokenAspect" />
+    <aop:config>
+        <aop:aspect ref="authTokenAspect">
+            <aop:before method="authTokenOp" pointcut="@annotation(com.ejar.common.permission.AuthToken)" />
+        </aop:aspect>
+    </aop:config>
 
     <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters register-defaults="true">
@@ -40,15 +56,6 @@
     <!-- 配置静态资源 -->
     <mvc:default-servlet-handler />
     <bean name="/views/**" class="org.springframework.web.servlet.mvc.UrlFilenameViewController" />
-
-    <bean id="configure" class="org.springframework.context.support.PropertySourcesPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>classpath*:META-INF/*-config.properties</value>
-            </list>
-        </property>
-        <property name="ignoreUnresolvablePlaceholders" value="true" />
-    </bean>
 
     <bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
         <property name="registerDefaultFormatters" value="true" />
@@ -100,7 +107,6 @@
             </bean>
         </entry>
     </util:map>
-
 
     <bean class="com.ejar.common.resolver.ExceptionMappingResolver">
         <property name="defaultErrorView" value="/common/error" />

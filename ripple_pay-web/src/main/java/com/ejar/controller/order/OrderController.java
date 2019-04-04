@@ -1,6 +1,8 @@
-package com.ejar.api.controller.order;
+package com.ejar.controller.order;
 
+import com.ejar.common.annotation.LoggerProcessTime;
 import com.ejar.common.objects.expt.BusinessException;
+import com.ejar.common.permission.AuthToken;
 import com.ejar.domain.bean.common.BaseResponse;
 import com.ejar.domain.bean.order.OrderInfoBean;
 import com.ejar.domain.model.CurrencyOrder;
@@ -12,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @Slf4j
-@ResponseBody
 @RestController
 @RequestMapping("/order")
 public class OrderController {
@@ -21,7 +22,9 @@ public class OrderController {
 	private OrderInfoService orderInfoService;
 	
 	@PostMapping("/queryOrderList.do")
-	public BaseResponse<List<CurrencyOrder>> queryOrderList(@RequestBody OrderInfoBean orderInfo) throws BusinessException {
+	@AuthToken
+	@LoggerProcessTime
+	public BaseResponse<List<CurrencyOrder>> queryOrderList(@RequestBody OrderInfoBean orderInfo) {
 		BaseResponse<List<CurrencyOrder>> response = new BaseResponse<List<CurrencyOrder>>();
 //		try{
 			response.setData(orderInfoService.queryOrderList(orderInfo));
