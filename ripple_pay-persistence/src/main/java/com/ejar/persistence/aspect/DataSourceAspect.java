@@ -1,8 +1,8 @@
 package com.ejar.persistence.aspect;
 
+import com.ejar.common.objects.ThreadContext;
 import com.ejar.persistence.datasource.DataSource;
 import com.ejar.persistence.datasource.DynamicRouteDataSource;
-import com.ejar.common.objects.ThreadContext;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

@@ -24,13 +24,8 @@
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>
-            <artifactId>ripple_pay-common</artifactId>
             <groupId>com.ejar</groupId>
-            <version>${project.parent.version}</version>
-        </dependency>
-        <dependency>
-            <artifactId>ripple_pay-domain</artifactId>
-            <groupId>com.ejar</groupId>
+            <artifactId>ripple_pay-persistence</artifactId>
             <version>${project.parent.version}</version>
         </dependency>
         <dependency>

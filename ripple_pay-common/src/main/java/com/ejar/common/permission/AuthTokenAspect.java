@@ -6,8 +6,12 @@ import com.ejar.common.constant.PublicKey;
 import com.ejar.common.token.JwtToken;
 import com.ejar.redis.RedisClientTemplate;
 import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
@@ -21,6 +25,8 @@ import java.util.Map;
  *
  * @author ChenXY
  */
+@Aspect
+@Component
 public class AuthTokenAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(AuthTokenAspect.class);
@@ -30,7 +36,16 @@ public class AuthTokenAspect {
 
     private HttpServletRequest request = null;
 
-    public void authTokenOp(JoinPoint joinPoint) {
+    /**
+     * 层切入点
+     */
+    @Pointcut("@annotation(com.ejar.common.permission.AuthToken)")
+    public void authTokenAspect() {
+
+    }
+
+    @Before("authTokenAspect()")
+    public void doBefore(JoinPoint joinPoint) {
         request = getHttpServletRequest();
         String token = request.getHeader(PublicKey.KEY_USER_TOKEN);
         Asserts.notNull(token,"ERROR_CODE_01","token为空");

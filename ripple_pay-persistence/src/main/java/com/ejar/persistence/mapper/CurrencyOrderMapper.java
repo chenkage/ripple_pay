@@ -2,10 +2,9 @@ package com.ejar.persistence.mapper;
 
 import com.ejar.domain.model.CurrencyOrder;
 import com.ejar.domain.model.CurrencyOrderExample;
+import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Component;
-
-import java.util.List;
 
 @Component
 public interface CurrencyOrderMapper {

@@ -13,17 +13,4 @@
     <packaging>jar</packaging>
 
     <name>ripple_pay-domain</name>
-
-
-    <properties>
-    </properties>
-
-    <dependencies>
-        <dependency>
-            <artifactId>ripple_pay-common</artifactId>
-            <groupId>com.ejar</groupId>
-            <version>${project.parent.version}</version>
-        </dependency>
-    </dependencies>
-
 </project>

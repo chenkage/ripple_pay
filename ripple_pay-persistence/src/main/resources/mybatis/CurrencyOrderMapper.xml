@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.ejar.persistence.mapper.CurrencyOrderMapper">
-  <resultMap id="BaseResultMap" type="CurrencyOrder">
+  <resultMap id="BaseResultMap" type="com.ejar.domain.model.CurrencyOrder">
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="create_by" jdbcType="VARCHAR" property="createBy" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
@@ -89,14 +89,14 @@
     present_total_price, p_order_id, main_trade_status, child_trade_status, order_type, 
     trade_rate, trade_number
   </sql>
-  <select id="selectByExample" parameterType="CurrencyOrderExample" resultMap="BaseResultMap">
+  <select id="selectByExample" parameterType="com.ejar.domain.model.CurrencyOrderExample" resultMap="BaseResultMap">
     select
     <if test="distinct">
       distinct
     </if>
     'true' as QUERYID,
     <include refid="Base_Column_List" />
-    from e_currency_order
+    from currency_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
@@ -107,21 +107,21 @@
   <select id="selectByPrimaryKey" parameterType="java.lang.Long" resultMap="BaseResultMap">
     select 
     <include refid="Base_Column_List" />
-    from e_currency_order
+    from currency_order
     where id = #{id,jdbcType=BIGINT}
   </select>
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Long">
-    delete from e_currency_order
+    delete from currency_order
     where id = #{id,jdbcType=BIGINT}
   </delete>
-  <delete id="deleteByExample" parameterType="CurrencyOrderExample">
-    delete from e_currency_order
+  <delete id="deleteByExample" parameterType="com.ejar.domain.model.CurrencyOrderExample">
+    delete from currency_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="CurrencyOrder" useGeneratedKeys="true" keyProperty="id">
-    insert into e_currency_order (id, create_by, create_time, 
+  <insert id="insert" parameterType="com.ejar.domain.model.CurrencyOrder">
+    insert into currency_order (id, create_by, create_time, 
       update_by, update_time, version, 
       del_flag, order_id, user_id, 
       buyer_id, seller_id, unit_price, 
@@ -138,8 +138,8 @@
       #{childTradeStatus,jdbcType=INTEGER}, #{orderType,jdbcType=INTEGER}, #{tradeRate,jdbcType=VARCHAR}, 
       #{tradeNumber,jdbcType=BIGINT})
   </insert>
-  <insert id="insertSelective" parameterType="CurrencyOrder" useGeneratedKeys="true" keyProperty="id">
-    insert into e_currency_order
+  <insert id="insertSelective" parameterType="com.ejar.domain.model.CurrencyOrder">
+    insert into currency_order
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -277,14 +277,14 @@
       </if>
     </trim>
   </insert>
-  <select id="countByExample" parameterType="CurrencyOrderExample" resultType="java.lang.Long">
-    select count(*) from e_currency_order
+  <select id="countByExample" parameterType="com.ejar.domain.model.CurrencyOrderExample" resultType="java.lang.Long">
+    select count(*) from currency_order
     <if test="_parameter != null">
       <include refid="Example_Where_Clause" />
     </if>
   </select>
   <update id="updateByExampleSelective" parameterType="map">
-    update e_currency_order
+    update currency_order
     <set>
       <if test="record.id != null">
         id = #{record.id,jdbcType=BIGINT},
@@ -358,7 +358,7 @@
     </if>
   </update>
   <update id="updateByExample" parameterType="map">
-    update e_currency_order
+    update currency_order
     set id = #{record.id,jdbcType=BIGINT},
       create_by = #{record.createBy,jdbcType=VARCHAR},
       create_time = #{record.createTime,jdbcType=TIMESTAMP},
@@ -385,8 +385,8 @@
       <include refid="Update_By_Example_Where_Clause" />
     </if>
   </update>
-  <update id="updateByPrimaryKeySelective" parameterType="CurrencyOrder">
-    update e_currency_order
+  <update id="updateByPrimaryKeySelective" parameterType="com.ejar.domain.model.CurrencyOrder">
+    update currency_order
     <set>
       <if test="createBy != null">
         create_by = #{createBy,jdbcType=VARCHAR},
@@ -454,8 +454,8 @@
     </set>
     where id = #{id,jdbcType=BIGINT}
   </update>
-  <update id="updateByPrimaryKey" parameterType="CurrencyOrder">
-    update e_currency_order
+  <update id="updateByPrimaryKey" parameterType="com.ejar.domain.model.CurrencyOrder">
+    update currency_order
     set create_by = #{createBy,jdbcType=VARCHAR},
       create_time = #{createTime,jdbcType=TIMESTAMP},
       update_by = #{updateBy,jdbcType=VARCHAR},

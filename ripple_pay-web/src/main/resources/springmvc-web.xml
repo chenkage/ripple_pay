@@ -8,29 +8,14 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd"
-       default-lazy-init="true">
+        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd">
 
-    <context:component-scan base-package="com.ejar">
+    <context:component-scan base-package="com.ejar.controller" use-default-filters="false">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller" />
     </context:component-scan>
 
-    <!-- 超时日志 -->
-    <bean id="processTimeAspect" class="com.ejar.common.aspect.ProcessTimeAspect" />
-    <aop:aspectj-autoproxy/>
-    <aop:config>
-        <aop:aspect ref="processTimeAspect">
-            <aop:around method="loggerProcessTime" pointcut="@annotation(com.ejar.common.annotation.LoggerProcessTime)" />
-        </aop:aspect>
-    </aop:config>
-
-    <!-- token -->
-    <bean id="authTokenAspect" class="com.ejar.common.permission.AuthTokenAspect" />
-    <aop:config>
-        <aop:aspect ref="authTokenAspect">
-            <aop:before method="authTokenOp" pointcut="@annotation(com.ejar.common.permission.AuthToken)" />
-        </aop:aspect>
-    </aop:config>
+    <!--启动对@AspectJ注解的支持 , proxy-target-class设置为true表示通知spring使用cglib而不是jdk的来生成代理方法，这样AOP可以拦截到Controller -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
 
     <mvc:annotation-driven conversion-service="conversionService">
         <mvc:message-converters register-defaults="true">

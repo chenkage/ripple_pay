@@ -3,9 +3,14 @@ package com.ejar.common.aspect;
 import com.ejar.common.annotation.LoggerProcessTime;
 
 import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
 
 import java.lang.reflect.Method;
 
@@ -17,6 +22,9 @@ import java.lang.reflect.Method;
  * @createtime May 29, 2018 10:38:05 PM
  * @version 1.0
  **/
+
+@Aspect
+@Component
 public class ProcessTimeAspect {
     private final Logger logger = LoggerFactory.getLogger(getClass());
     private long error = 5000L;
@@ -44,6 +52,15 @@ public class ProcessTimeAspect {
         this.info = info;
     }
 
+    /**
+     * 层切入点
+     */
+    @Pointcut("@annotation(com.ejar.common.annotation.LoggerProcessTime)")
+    public void loggerProcessAspect() {
+
+    }
+
+    @Around("loggerProcessAspect()")
     public Object loggerProcessTime(ProceedingJoinPoint joinPoint) throws Throwable {
         final MethodSignature methodSignature = (MethodSignature)joinPoint.getSignature();
         final Method method = joinPoint.getTarget().getClass().getMethod(methodSignature.getName(), methodSignature.getParameterTypes());

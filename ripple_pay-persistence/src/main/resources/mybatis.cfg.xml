@@ -23,6 +23,6 @@
     </typeHandlers>
 
     <mappers>
-        <package name="com.ejar.provider.persistence.mapper"/>
+        <package name="com.ejar.persistence.mapper"/>
     </mappers>
 </configuration>

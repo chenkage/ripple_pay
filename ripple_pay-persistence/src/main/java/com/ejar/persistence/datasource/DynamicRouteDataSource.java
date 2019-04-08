@@ -1,6 +1,6 @@
 package com.ejar.persistence.datasource;
 
-import com.ejar.common.objects.ThreadContext;
+import com.sun.jmx.snmp.ThreadContext;
 import org.springframework.jdbc.datasource.lookup.AbstractRoutingDataSource;
 
 public class DynamicRouteDataSource extends AbstractRoutingDataSource {
